@@ -24,6 +24,16 @@ alias ..7='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 alias ..8='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 alias ..9='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
 
+####################
+# Bookmark directory
+# 
+# example usage:
+# $ a 1
+# go back to dir:
+# $ 1
+# 
+bookmark_dir() { alias $1="cd $PWD"; }
+
 # Shortcuts
 alias doc='cd $HOME/Documents'
 alias repos='cd $HOME/Documents/repos'
