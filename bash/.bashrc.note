@@ -1,15 +1,50 @@
 # Quality of Life things to add to ~/.bashrc
 # don't forget to restart active terminals for changes to take effect
 
-#######
-# QoL #
-#######
 
+#  ██╗       ██╗   ██╗███████╗███████╗██████╗ 
+# ███║       ██║   ██║██╔════╝██╔════╝██╔══██╗
+# ╚██║       ██║   ██║███████╗█████╗  ██████╔╝
+#  ██║       ██║   ██║╚════██║██╔══╝  ██╔══██╗
+#  ██║██╗    ╚██████╔╝███████║███████╗██║  ██║
+#  ╚═╝╚═╝     ╚═════╝ ╚══════╝╚══════╝╚═╝  ╚═╝
+#                                             
+
+# Shortcuts
+alias doc='cd $HOME/Documents'
+alias repos='cd $HOME/Documents/repos'
+
+# Scripts - add all scripts from repo here:
+alias echo_permission='$HOME/Documents/repos/scripts/bash/echo_permission.sh'
+
+
+
+#  ██╗        ██████╗ ███████╗███╗   ██╗███████╗██████╗  █████╗ ██╗     
+# ███║       ██╔════╝ ██╔════╝████╗  ██║██╔════╝██╔══██╗██╔══██╗██║     
+# ╚██║       ██║  ███╗█████╗  ██╔██╗ ██║█████╗  ██████╔╝███████║██║     
+#  ██║       ██║   ██║██╔══╝  ██║╚██╗██║██╔══╝  ██╔══██╗██╔══██║██║     
+#  ██║██╗    ╚██████╔╝███████╗██║ ╚████║███████╗██║  ██║██║  ██║███████╗
+#  ╚═╝╚═╝     ╚═════╝ ╚══════╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝
+#                                                                       
+
+# System
+alias df="df -Tha --total"
+alias du="du -ach | sort -h"
+alias free="free -mt"
+alias ps="ps auxf"
+alias psg="ps aux | grep -v grep | grep -i -e VSZ -e"
+
+# Misc
+alias myip="curl http://ipecho.net/plain; echo"
+
+# Files, folders, commands
+alias mkdir="mkdir -pv"
 alias ll='ls -al'
 alias ls='ls -CF'
 alias lslog='ls -lhFA | less'
 alias cls='clear'
 alias search="find . -name "
+alias histg="history | grep"
 
 # Change Directory
 alias cd..='cd ..'
@@ -33,6 +68,17 @@ alias ........='cd ../../../../../../..'
 alias .........='cd ../../../../../../../..'
 alias ..........='cd ../../../../../../../../..'
 
+# Alternative. 
+# Usage: $ up n
+up() {
+    # default parameter to 1 if non provided
+    declare -i d=${@:-1}
+    # ensure given parameter is non-negative. Print error and return if it is
+    (( $d < 0 )) && (>&2 echo "up: Error: negative value provided") && return 1;
+     # remove last d directories from pwd, append "/" in case result is empty
+    cd "$(pwd | sed -E 's;(/[^/]*){0,'$d'}$;;')/";
+}
+
 ####################
 # Bookmark directory
 # 
@@ -43,9 +89,43 @@ alias ..........='cd ../../../../../../../../..'
 # 
 bookmark_dir() { alias $1="cd $PWD"; }
 
-# Shortcuts
-alias doc='cd $HOME/Documents'
-alias repos='cd $HOME/Documents/repos'
+# mkdir + cd
+# function mkdircd() { mkdir -p "$@" && eval cd "\"\$$#\""; }
+function mkdircd() { mkdir -p $1; cd $1; }
 
-# Scripts
-alias echo_permission='$HOME/Documents/repos/scripts/bash/echo_permission.sh'
+# Unzip any compressed
+function extract {
+ if [ -z "$1" ]; then
+    # display usage if no parameters given
+    echo "Usage: extract <path/file_name>.<zip|rar|bz2|gz|tar|tbz2|tgz|Z|7z|xz|ex|tar.bz2|tar.gz|tar.xz>"
+    echo "       extract <path/file_name_1.ext> [path/file_name_2.ext] [path/file_name_3.ext]"
+    return 1
+ else
+    for n in $@
+    do
+      if [ -f "$n" ] ; then
+          case "${n%,}" in
+            *.tar.bz2|*.tar.gz|*.tar.xz|*.tbz2|*.tgz|*.txz|*.tar) 
+                         tar xvf "$n"       ;;
+            *.lzma)      unlzma ./"$n"      ;;
+            *.bz2)       bunzip2 ./"$n"     ;;
+            *.rar)       unrar x -ad ./"$n" ;;
+            *.gz)        gunzip ./"$n"      ;;
+            *.zip)       unzip ./"$n"       ;;
+            *.z)         uncompress ./"$n"  ;;
+            *.7z|*.arj|*.cab|*.chm|*.deb|*.dmg|*.iso|*.lzh|*.msi|*.rpm|*.udf|*.wim|*.xar)
+                         7z x ./"$n"        ;;
+            *.xz)        unxz ./"$n"        ;;
+            *.exe)       cabextract ./"$n"  ;;
+            *)
+                         echo "extract: '$n' - unknown archive method"
+                         return 1
+                         ;;
+          esac
+      else
+          echo "'$n' - file does not exist"
+          return 1
+      fi
+    done
+fi
+}
