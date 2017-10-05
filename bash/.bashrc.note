@@ -1,0 +1,32 @@
+# Quality of Life things to add to ~/.bashrc
+# don't forget to restart active terminals for changes to take effect
+
+#######
+# QoL #
+#######
+
+alias ll='ls -al'
+alias ls='ls -CF'
+alias lslog='ls -lhFA | less'
+alias cls='clear'
+alias search="find . -name "
+
+# Change Directory
+alias cd..='cd ..'
+alias ..='cd ..'
+
+alias ..2='cd ..; cd ..'
+alias ..3='cd ..; cd ..; cd ..'
+alias ..4='cd ..; cd ..; cd ..; cd ..'
+alias ..5='cd ..; cd ..; cd ..; cd ..; cd ..'
+alias ..6='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
+alias ..7='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
+alias ..8='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
+alias ..9='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
+
+# Shortcuts
+alias doc='cd $HOME/Documents'
+alias repos='cd $HOME/Documents/repos'
+
+# Scripts
+alias echo_permission='$HOME/Documents/repos/scripts/bash/echo_permission.sh'
