@@ -15,14 +15,14 @@ alias search="find . -name "
 alias cd..='cd ..'
 alias ..='cd ..'
 
-alias ..2='cd ..; cd ..'
-alias ..3='cd ..; cd ..; cd ..'
-alias ..4='cd ..; cd ..; cd ..; cd ..'
-alias ..5='cd ..; cd ..; cd ..; cd ..; cd ..'
-alias ..6='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
-alias ..7='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
-alias ..8='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
-alias ..9='cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..; cd ..'
+alias ..2='cd ../..'
+alias ..3='cd ../../..'
+alias ..4='cd ../../../..'
+alias ..5='cd ../../../../..'
+alias ..6='cd ../../../../../..'
+alias ..7='cd ../../../../../../..'
+alias ..8='cd ../../../../../../../..'
+alias ..9='cd ../../../../../../../../..'
 
 ####################
 # Bookmark directory
